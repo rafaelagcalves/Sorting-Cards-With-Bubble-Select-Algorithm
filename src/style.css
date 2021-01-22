@@ -1,1 +1,57 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
+body {
+  background-color: green;
+}
+
+header {
+  height: 5rem;
+  background-color: red;
+}
+
+section {
+  height: 15rem;
+  background-color: blue;
+}
+
+article {
+  background-color: yellow;
+}
+
+.card {
+  background-color: white;
+  height: 12rem;
+  box-shadow: 1rem;
+}
+.heart {
+  color: red;
+  font-size: 1.3rem;
+}
+.diamond {
+  color: red;
+  font-size: 1.3rem;
+}
+.club {
+  color: black;
+  font-size: 1.3rem;
+}
+.spade {
+  color: black;
+  font-size: 1.3rem;
+}
+.cardHeight {
+  font-size: 3rem;
+}
+
+.flip {
+  -moz-transform: scale(1, -1);
+  -webkit-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+.suit {
+  font-size: 1.3rem;
+}
+.bottomSuit {
+  margin-bottom: 0.01rem;
+}

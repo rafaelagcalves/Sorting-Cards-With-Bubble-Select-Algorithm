@@ -23,10 +23,14 @@ const orderNumbers = [
 
 const orderSuits = ["&spades;", "&clubs;", "&diams;", "&hearts;"];
 
-window.onload = function() {
-  let repeticion = 9;
+const card = document.querySelector("#card");
+const inputCard = document.querySelector("#inputForCards");
+const draw = document.querySelector("#draw");
+const sortBubble = document.querySelector("#sortBubble");
+const sortSelect = document.querySelector("#sortSelect");
 
-  this.console.log(selectSort(directorDeOrquesta(repeticion)));
+window.onload = function() {
+  this.console.log(directorDeOrquesta(inputCard.value));
 };
 
 const bubbleSort = arr => {
@@ -50,20 +54,14 @@ const bubbleSort = arr => {
 };
 
 const generateNumbers = () => {
-  let cardHeight = "";
   let randomHeight = Math.floor(Math.random() * orderNumbers.length);
-  cardHeight = orderNumbers[randomHeight];
+  let cardHeight = orderNumbers[randomHeight];
   return cardHeight;
 };
 
 const generateSuits = () => {
-  let suite = "";
   let randomSuite = Math.floor(Math.random() * orderSuits.length);
-  if (randomSuite == 0) suite = orderSuits[0];
-  if (randomSuite == 1) suite = orderSuits[1];
-  if (randomSuite == 2) suite = orderSuits[2];
-  if (randomSuite == 3) suite = orderSuits[3];
-
+  let suite = orderSuits[randomSuite];
   return suite;
 };
 
@@ -91,7 +89,6 @@ const selectSort = arr => {
         orderNumbers.indexOf(arr[min].number) >
         orderNumbers.indexOf(arr[index].number)
       ) {
-        //arr[min] > orderNumbers.indexOf(arr[index].number)) {
         let aux = arr[min];
         arr[min] = arr[index];
         arr[index] = aux;
@@ -100,4 +97,23 @@ const selectSort = arr => {
     min++;
   }
   return arr;
+};
+
+const isNumber = input => {
+  return Number(input.value) % 1 == 0;
+};
+
+const checkInputCard = input => {
+  input.addEventListener("focusout", event => {
+    isNumber(input) && input.value.length > 0 && input.value.length < 53
+      ? true
+      : false;
+  });
+};
+
+const checkDraw = input => {
+  draw.addEventListener("submit", event => {
+    preventDefault();
+    checkinputCard(input);
+  });
 };
