@@ -21,16 +21,17 @@ const orderNumbers = [
   "K"
 ];
 
-const orderSuits = ["&spades;", "&clubs;", "&diams;", "&hearts;"];
+const orderSuits = ["\u2660", "\u2663", "\u2665", "\u2666"];
 
 const card = document.querySelector("#card");
 const inputCard = document.querySelector("#inputForCards");
 const draw = document.querySelector("#draw");
 const sortBubble = document.querySelector("#sortBubble");
 const sortSelect = document.querySelector("#sortSelect");
+const form = document.querySelector("#form");
 
 window.onload = function() {
-  this.console.log(directorDeOrquesta(inputCard.value));
+  this.console.log(checkDraw());
 };
 
 const bubbleSort = arr => {
@@ -38,6 +39,7 @@ const bubbleSort = arr => {
   while (wall > 0) {
     let index = 0;
     while (index < wall) {
+      newCard(arr);
       if (
         orderNumbers.indexOf(arr[index].number) >
         orderNumbers.indexOf(arr[index + 1].number)
@@ -85,6 +87,7 @@ const selectSort = arr => {
   let min = 0;
   while (min < arr.length - 1) {
     for (let index = min + 1; index < arr.length; index++) {
+      newCard(arr);
       if (
         orderNumbers.indexOf(arr[min].number) >
         orderNumbers.indexOf(arr[index].number)
@@ -99,21 +102,75 @@ const selectSort = arr => {
   return arr;
 };
 
-const isNumber = input => {
-  return Number(input.value) % 1 == 0;
-};
+const checkDraw = () => {
+  draw.addEventListener("click", event => {
+    event.preventDefault();
+    //directorDeOrquesta(inputCard.value);
+    //AÑADIR UN REMOVE QUE BORRE TODO LO QUE ESTA DENTRO DE SECTION
+    // AÑADIR ADD
+    let prueba = newCard(directorDeOrquesta(inputCard.value));
 
-const checkInputCard = input => {
-  input.addEventListener("focusout", event => {
-    isNumber(input) && input.value.length > 0 && input.value.length < 53
-      ? true
-      : false;
+    return prueba;
+    //console.log(newCard(arrayAux));
   });
 };
 
-const checkDraw = input => {
-  draw.addEventListener("submit", event => {
-    preventDefault();
-    checkinputCard(input);
-  });
+const newCard = arr => {
+  //console.log(arr);
+  var color = "";
+  for (let i = 0; i < arr.length; i++) {
+    let card = document.querySelector("#card");
+    let newCard = document.createElement("div");
+    newCard.classList.add("col-sm-12", "col-lg-1", "card", "ml-5");
+    card.appendChild(newCard);
+
+    if (arr[i].suit == "\u2665" || arr[i].suit == "\u2666") {
+      newCard.classList.add("text-danger");
+    }
+    let cardTop = document.createElement("div");
+    cardTop.classList.add("card-title");
+    newCard.appendChild(cardTop);
+    let suitTop = document.createElement("p");
+    suitTop.classList.add("suit1", "ml-0", "mt-1", "suit");
+    cardTop.appendChild(suitTop);
+    let textTop = document.createTextNode(arr[i].suit);
+    suitTop.appendChild(textTop);
+
+    let cardNumber = document.createElement("div");
+    newCard.appendChild(cardNumber);
+    cardNumber.classList.add(
+      "card-body",
+      "d-flex",
+      "align-items-center",
+      "justify-content-center",
+      "cardHeight",
+      "mb-1"
+    );
+    let number = document.createElement("p");
+    number.classList.add("number");
+    cardNumber.appendChild(number);
+    let textNumber = document.createTextNode(arr[i].number);
+    number.appendChild(textNumber);
+
+    let cardBottom = document.createElement("div");
+    cardBottom.classList.add(
+      "card-title",
+      "align-items-end",
+      "suit",
+      "bottomSuit"
+    );
+    newCard.appendChild(cardBottom);
+    let suitBottom = document.createElement("p");
+    suitBottom.classList.add(
+      "suit1",
+      "ml-0",
+      "d-flex",
+      "justify-content-end",
+      "mb-0",
+      "flip"
+    );
+    cardBottom.appendChild(suitBottom);
+    let textBottom = document.createTextNode(arr[i].suit);
+    suitBottom.appendChild(textBottom);
+  }
 };

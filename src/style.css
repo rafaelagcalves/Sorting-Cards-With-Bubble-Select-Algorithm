@@ -3,7 +3,7 @@ body {
   background-color: green;
 }
 
-header {
+form {
   height: 5rem;
   background-color: red;
 }
@@ -21,6 +21,10 @@ article {
   background-color: white;
   height: 12rem;
   box-shadow: 1rem;
+}
+.number {
+  font-size: 2rem;
+  margin-top: -1rem;
 }
 .heart {
   color: red;
