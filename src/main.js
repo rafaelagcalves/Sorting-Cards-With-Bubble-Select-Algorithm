@@ -29,9 +29,11 @@ const draw = document.querySelector("#draw");
 const sortBubble = document.querySelector("#sortBubble");
 const sortSelect = document.querySelector("#sortSelect");
 const form = document.querySelector("#form");
+const article = document.querySelector("#sortCards");
 
 window.onload = function() {
-  this.console.log(checkDraw());
+  checkDraw();
+  checkBubble();
 };
 
 const bubbleSort = arr => {
@@ -39,7 +41,8 @@ const bubbleSort = arr => {
   while (wall > 0) {
     let index = 0;
     while (index < wall) {
-      newCard(arr);
+      //newCard(arr);
+      cardSort(arr);
       if (
         orderNumbers.indexOf(arr[index].number) >
         orderNumbers.indexOf(arr[index + 1].number)
@@ -102,26 +105,22 @@ const selectSort = arr => {
   return arr;
 };
 
+var arrayCards = [];
+
 const checkDraw = () => {
   draw.addEventListener("click", event => {
     event.preventDefault();
-    //directorDeOrquesta(inputCard.value);
-    //AÑADIR UN REMOVE QUE BORRE TODO LO QUE ESTA DENTRO DE SECTION
-    // AÑADIR ADD
-    let prueba = newCard(directorDeOrquesta(inputCard.value));
-
-    return prueba;
-    //console.log(newCard(arrayAux));
+    card.textContent = "";
+    arrayCards = Array.from(directorDeOrquesta(inputCard.value));
+    newCard(arrayCards);
   });
 };
 
 const newCard = arr => {
-  //console.log(arr);
-  var color = "";
   for (let i = 0; i < arr.length; i++) {
     let card = document.querySelector("#card");
     let newCard = document.createElement("div");
-    newCard.classList.add("col-sm-12", "col-lg-1", "card", "ml-5");
+    newCard.classList.add("col-sm-12", "col-lg-1", "card");
     card.appendChild(newCard);
 
     if (arr[i].suit == "\u2665" || arr[i].suit == "\u2666") {
@@ -173,4 +172,79 @@ const newCard = arr => {
     let textBottom = document.createTextNode(arr[i].suit);
     suitBottom.appendChild(textBottom);
   }
+  return arr;
+};
+
+// A PARTIR DE AQUI BOTONES PARA ORDENAR
+
+const checkBubble = () => {
+  sortBubble.addEventListener("click", event => {
+    event.preventDefault();
+    article.textContent = "";
+    cardSort(bubbleSort(arrayCards));
+  });
+};
+
+const cardSort = arr => {
+  let ulList = document.createElement("ul", "listaPrincipal");
+  ulList.classList.add("row");
+  for (let i = 0; i < arr.length; i++) {
+    let list = document.createElement("li", "list");
+    list.classList.add("col-1");
+    let newCard = document.createElement("div");
+    newCard.classList.add("card");
+    article.appendChild(ulList);
+    ulList.appendChild(list);
+    list.appendChild(newCard);
+
+    if (arr[i].suit == "\u2665" || arr[i].suit == "\u2666") {
+      newCard.classList.add("text-danger");
+    }
+    let cardTop = document.createElement("div");
+    cardTop.classList.add("card-title");
+    newCard.appendChild(cardTop);
+    let suitTop = document.createElement("p");
+    suitTop.classList.add("suit1", "ml-0", "mt-1", "suit");
+    cardTop.appendChild(suitTop);
+    let textTop = document.createTextNode(arr[i].suit);
+    suitTop.appendChild(textTop);
+
+    let cardNumber = document.createElement("div");
+    newCard.appendChild(cardNumber);
+    cardNumber.classList.add(
+      "card-body",
+      "d-flex",
+      "align-items-center",
+      "justify-content-center",
+      "cardHeight",
+      "mb-1"
+    );
+    let number = document.createElement("p");
+    number.classList.add("number");
+    cardNumber.appendChild(number);
+    let textNumber = document.createTextNode(arr[i].number);
+    number.appendChild(textNumber);
+
+    let cardBottom = document.createElement("div");
+    cardBottom.classList.add(
+      "card-title",
+      "align-items-end",
+      "suit",
+      "bottomSuit"
+    );
+    newCard.appendChild(cardBottom);
+    let suitBottom = document.createElement("p");
+    suitBottom.classList.add(
+      "suit1",
+      "ml-0",
+      "d-flex",
+      "justify-content-end",
+      "mb-0",
+      "flip"
+    );
+    cardBottom.appendChild(suitBottom);
+    let textBottom = document.createTextNode(arr[i].suit);
+    suitBottom.appendChild(textBottom);
+  }
+  return arr;
 };

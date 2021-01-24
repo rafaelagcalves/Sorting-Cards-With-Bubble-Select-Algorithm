@@ -11,6 +11,8 @@ form {
 section {
   height: 15rem;
   background-color: blue;
+  margin-left: 5rem;
+  margin-right: 5rem;
 }
 
 article {
@@ -21,6 +23,8 @@ article {
   background-color: white;
   height: 12rem;
   box-shadow: 1rem;
+  display: flex;
+  justify-content: space-around;
 }
 .number {
   font-size: 2rem;
@@ -30,18 +34,7 @@ article {
   color: red;
   font-size: 1.3rem;
 }
-.diamond {
-  color: red;
-  font-size: 1.3rem;
-}
-.club {
-  color: black;
-  font-size: 1.3rem;
-}
-.spade {
-  color: black;
-  font-size: 1.3rem;
-}
+
 .cardHeight {
   font-size: 3rem;
 }
@@ -58,4 +51,13 @@ article {
 }
 .bottomSuit {
   margin-bottom: 0.01rem;
+}
+
+.listaPrincipal {
+  display: inline;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.list {
+  list-style-type: none;
 }
