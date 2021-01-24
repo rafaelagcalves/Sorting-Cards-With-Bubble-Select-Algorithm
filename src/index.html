@@ -12,40 +12,49 @@
     />
     <link rel="shortcut icon" href="./4geeks.ico" />
   </head>
-  <body class="container-fluid">
-    <form class="row d-flex flex-row align-content-center" id="form">
+  <body class="container-fluid" id="body">
+    <form
+      class="row d-flex flex-row align-items-center justify-content-center"
+      id="form"
+    >
       <input
         type="text"
-        class="offset-1 col-1 form-control"
+        class="col-1 form-control"
         id="inputForCards"
         placeholder="Number here"
       />
-      <button class="btn ml-2" id="draw" type="submit">
+      <button class="col-1 btn ml-2 draw" id="draw" type="submit">
         <img
           class="myImg"
           src="https://user-images.githubusercontent.com/7556992/40873751-80ac10be-6690-11e8-8e53-ee367daff5f0.png"
         />
+        DRAW
       </button>
-      <button class="btn ml-2" id="bubbleSort" type="submit">
+      <button class="col-1 btn ml-2 bubbleSort" id="bubbleSort" type="submit">
         <img
           class="myImg"
           src="https://user-images.githubusercontent.com/7556992/40873751-80ac10be-6690-11e8-8e53-ee367daff5f0.png"
         />
+        BUBBLE SORT
       </button>
-      <button class="btn ml-2" id="selectSort" type="submit">
+      <button class="col-1 btn ml-2 selectSort" id="selectSort" type="submit">
         <img
           class="myImg"
           src="https://user-images.githubusercontent.com/7556992/40873751-80ac10be-6690-11e8-8e53-ee367daff5f0.png"
         />
+        SELECT SORT
       </button>
     </form>
     <section
-      class="row d-flex flex-row align-items-center ml-3"
+      class="row d-flex flex-row align-items-center justify-content-center"
       id="unorderedCard"
     ></section>
-    <div>
+    <div class="row d-flex flex-row align-items-center justify-content-center">
       <p class="paragraph">SORTING:</p>
     </div>
-    <article class="row d-flex flex-column" id="sortCards"></article>
+    <article
+      class="row d-flex flex-column justify-content-center"
+      id="sortCards"
+    ></article>
   </body>
 </html>

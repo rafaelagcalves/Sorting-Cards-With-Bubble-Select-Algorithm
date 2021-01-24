@@ -6,6 +6,7 @@ import "./assets/img/rigo-baby.jpg";
 import "./assets/img/4geeks.ico";
 
 // DECLARATION OF CONSTANTS
+
 const orderNumbers = [
   "A",
   "2",
@@ -25,26 +26,27 @@ const orderNumbers = [
 const orderSuits = ["\u2660", "\u2663", "\u2665", "\u2666"];
 
 const unorderedCard = document.querySelector("#unorderedCard");
+const article = document.querySelector("#sortCards");
+
 const inputCard = document.querySelector("#inputForCards");
+
 const draw = document.querySelector("#draw");
 const sortBubble = document.querySelector("#bubbleSort");
 const sortSelect = document.querySelector("#selectSort");
-const form = document.querySelector("#form");
-const article = document.querySelector("#sortCards");
 
 window.onload = function() {
-  checkDraw();
-  checkBubble();
-  checkSelect();
+  clickDraw();
+  clickBubbleSort();
+  clickSelectSort();
 };
 
-//BUBBLE SORT ALGORITHM
+// SORTS ALGORITHMS
+
 const bubbleSort = arr => {
   let wall = arr.length - 1;
   while (wall > 0) {
     let index = 0;
     while (index < wall) {
-      //newCard(arr);
       cardSort(arr);
       if (
         orderNumbers.indexOf(arr[index].number) >
@@ -60,12 +62,12 @@ const bubbleSort = arr => {
   }
   return arr;
 };
-//SELECT SORT ALGORITHM
+
 const selectSort = arr => {
   let min = 0;
   while (min < arr.length - 1) {
-    newCard(arr);
     for (let index = min + 1; index < arr.length; index++) {
+      cardSort(arr);
       if (
         orderNumbers.indexOf(arr[min].number) >
         orderNumbers.indexOf(arr[index].number)
@@ -79,19 +81,21 @@ const selectSort = arr => {
   }
   return arr;
 };
-//GENERATE RANDOM NUMBERS
+
+// FROM HERE 4 FUNCTIONS TO GENERATE THE CARDS
+
 const generateNumbers = () => {
   let randomNumber = Math.floor(Math.random() * orderNumbers.length);
   let cardNumber = orderNumbers[randomNumber];
   return cardNumber;
 };
-//GENERATE RANDOM SUITS
+
 const generateSuits = () => {
   let randomSuit = Math.floor(Math.random() * orderSuits.length);
   let cardSuit = orderSuits[randomSuit];
   return cardSuit;
 };
-//GENERATE RANDOM CARDS
+
 const generateCard = () => {
   let theEntireCard = {
     number: generateNumbers(),
@@ -100,7 +104,7 @@ const generateCard = () => {
   return theEntireCard;
 };
 
-const orchestraConductor = n => {
+const cardsGenerator = n => {
   let cardObject = [];
   for (let i = 0; i < n; i++) {
     cardObject.push(generateCard());
@@ -108,12 +112,43 @@ const orchestraConductor = n => {
   return cardObject;
 };
 
-//CREATE UNORDERED CARDS
+// FROM HERE WE CREATE 3 FUNCTIONS FOR EACH BUTTON
+
+var arrayCards = []; // WE USE THIS EMPTY ARRAY FOR THE 3 DIFFERENT BUTTON AND THEN THE ARRAY DOSENT CHANGE
+
+const clickDraw = () => {
+  draw.addEventListener("click", event => {
+    event.preventDefault();
+    unorderedCard.textContent = "";
+    article.textContent = "";
+    arrayCards = Array.from(cardsGenerator(inputCard.value));
+    newCard(arrayCards);
+  });
+};
+
+const clickBubbleSort = () => {
+  sortBubble.addEventListener("click", event => {
+    event.preventDefault();
+    article.textContent = "";
+    cardSort(bubbleSort(arrayCards));
+  });
+};
+
+const clickSelectSort = () => {
+  sortSelect.addEventListener("click", event => {
+    event.preventDefault();
+    article.textContent = "";
+    cardSort(selectSort(arrayCards));
+  });
+};
+
+// FROM HERE 2 DIFFERENT FUNCTION TO DRAW THE CARDS. UNORDERED CARDS AND ORDER CARDS
+
 const newCard = arr => {
   for (let i = 0; i < arr.length; i++) {
-    // let unorderedCard = document.querySelector("#unorderedCard");
+    let unorderedCard = document.querySelector("#unorderedCard");
     let newCard = document.createElement("div");
-    newCard.classList.add("col-sm-12", "col-lg-1", "card");
+    newCard.classList.add("col-lg-1", "card");
     unorderedCard.appendChild(newCard);
 
     if (arr[i].suit == "\u2665" || arr[i].suit == "\u2666") {
@@ -124,7 +159,7 @@ const newCard = arr => {
     newCard.appendChild(cardTop);
 
     let suitTop = document.createElement("p");
-    suitTop.classList.add("suit1", "ml-0", "mt-1", "suit");
+    suitTop.classList.add("ml-0", "mt-1", "suit");
     cardTop.appendChild(suitTop);
     let textTop = document.createTextNode(arr[i].suit);
     suitTop.appendChild(textTop);
@@ -156,7 +191,6 @@ const newCard = arr => {
     newCard.appendChild(cardBottom);
     let suitBottom = document.createElement("p");
     suitBottom.classList.add(
-      "suit1",
       "ml-0",
       "d-flex",
       "justify-content-end",
@@ -170,46 +204,11 @@ const newCard = arr => {
   return arr;
 };
 
-//EVENTS CLICK DRAW
-let arrayCards = [];
-
-const checkDraw = () => {
-  draw.addEventListener("click", event => {
-    event.preventDefault();
-    unorderedCard.textContent = "";
-    arrayCards = Array.from(orchestraConductor(inputCard.value));
-    newCard(arrayCards);
-  });
-};
-
-// EVENT SORT BUBBLE
-
-const checkBubble = () => {
-  sortBubble.addEventListener("click", event => {
-    event.preventDefault();
-    article.textContent = "";
-    cardSort(bubbleSort(arrayCards));
-  });
-};
-
-// EVENT SORT SELECT
-
-const checkSelect = () => {
-  sortSelect.addEventListener("click", event => {
-    event.preventDefault();
-    article.textContent = "";
-    cardSort(selectSort(arrayCards));
-  });
-};
-
-// CREATE ORDERED CARDS
-
 const cardSort = arr => {
-  const article = document.querySelector("#sortCards");
-  let ulList = document.createElement("ul", "listaPrincipal");
-  ulList.classList.add("row");
+  let ulList = document.createElement("ul");
+  ulList.classList.add("row", "justify-content-center", "mr-3");
   for (let i = 0; i < arr.length; i++) {
-    let list = document.createElement("li", "list");
+    let list = document.createElement("li");
     let newCard = document.createElement("div");
     newCard.classList.add("card");
     article.appendChild(ulList);
@@ -219,11 +218,12 @@ const cardSort = arr => {
     if (arr[i].suit == "\u2665" || arr[i].suit == "\u2666") {
       newCard.classList.add("text-danger");
     }
+
     let cardTop = document.createElement("div");
     cardTop.classList.add("card-title");
     newCard.appendChild(cardTop);
     let suitTop = document.createElement("p");
-    suitTop.classList.add("suit1", "ml-0", "mt-1", "suit");
+    suitTop.classList.add("ml-3", "mt-1", "suit");
     cardTop.appendChild(suitTop);
     let textTop = document.createTextNode(arr[i].suit);
     suitTop.appendChild(textTop);
@@ -254,8 +254,7 @@ const cardSort = arr => {
     newCard.appendChild(cardBottom);
     let suitBottom = document.createElement("p");
     suitBottom.classList.add(
-      "suit1",
-      "ml-0",
+      "mr-3",
       "d-flex",
       "justify-content-end",
       "mb-0",
